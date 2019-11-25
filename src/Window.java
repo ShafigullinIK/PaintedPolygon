@@ -22,11 +22,13 @@ public class Window extends JFrame {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                animator.setFirstPointOfLine(e.getX(), e.getY());
 
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                animator.setSecondPointOfLine(e.getX(), e.getY());
 
             }
 
