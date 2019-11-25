@@ -11,6 +11,9 @@ public class Animator {
     final int HEIGHT = 750;
     final int POINT_SIZE = 8;
 
+    final Color OUTER_POINTS_COLOR = Color.GRAY;
+    final Color INNER_POINTS_COLOR = Color.GREEN;
+
     private Point[][] points = new Point[WIDTH / STEP][HEIGHT / STEP];
 
     public Animator(Graphics g){
@@ -35,14 +38,26 @@ public class Animator {
     public void drawFragmentation(){
         graphics.setColor(Color.BLACK);
 
+        Line l = new Line(1, 15);
+
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 Point p = points[i][j];
+                setColor(p, l);
                 graphics.fillOval(p.getX() - POINT_SIZE/2,
                         p.getY() - POINT_SIZE/2,
                         POINT_SIZE,
                         POINT_SIZE);
             }
+        }
+    }
+
+    public void setColor(Point p, Line l){
+        int position = l.positionOfPoint(p);
+        if(position > 0) {
+            graphics.setColor(INNER_POINTS_COLOR);
+        } else {
+            graphics.setColor(OUTER_POINTS_COLOR);
         }
     }
 
