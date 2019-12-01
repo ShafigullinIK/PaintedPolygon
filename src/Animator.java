@@ -29,9 +29,7 @@ public class Animator {
     }
 
     public void init() {
-        graphics.setColor(Color.WHITE);
-        graphics.fillRect(0, 0, WIDTH, HEIGHT);
-        graphics.setColor(Color.BLACK);
+        clearImg();
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 points[i][j] = new Point(STEP * i, STEP * j);
@@ -46,7 +44,7 @@ public class Animator {
     }
 
     public void drawFragmentation() {
-        graphics.setColor(Color.BLACK);
+
         for (int i = 0; i < points.length; i++) {
             for (int j = 0; j < points[i].length; j++) {
                 Point p = points[i][j];
@@ -73,27 +71,46 @@ public class Animator {
         }
     }
 
+    public void clearImg() {
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0, 0, WIDTH, HEIGHT);
+        graphics.setColor(Color.BLACK);
+    }
+
     public void drawToScreen() {
         screenGraphics.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
+        clearImg();
     }
 
     public void setFirstPointOfLine(int x, int y) {
         firstPointOfLine = new Point(x, y);
     }
 
-    public void setSecondPointOfLine(int x, int y){
+    public void setSecondPointOfLine(int x, int y) {
         secondPointOfLine = new Point(x, y);
         createLine();
     }
 
-    public void createLine(){
+    public void createLine() {
         double b = firstPointOfLine.getY() -
-                firstPointOfLine.getX() /
+                firstPointOfLine.getX() * (secondPointOfLine.getY() - firstPointOfLine.getY()) * 1.0 /
                         (secondPointOfLine.getX() - firstPointOfLine.getX());
-        double k = (secondPointOfLine.getY() - firstPointOfLine.getY()) /
+        double k = (secondPointOfLine.getY() - firstPointOfLine.getY()) * 1.0 /
                 (secondPointOfLine.getX() - firstPointOfLine.getX());
         Line l = new Line(k, b);
         lines.add(l);
+        drawLine(l);
+        System.out.println(k + "*x + " + b);
+    }
+
+    public void drawLine(Line l) {
+        graphics.setColor(Color.BLUE);
+        graphics.drawLine(10, (int) l.valueOfLine(10), 1200, (int) l.valueOfLine(1200));
+
+    }
+
+    public void drawAll() {
+        drawFragmentation();
     }
 
 }

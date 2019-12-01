@@ -29,6 +29,8 @@ public class Window extends JFrame {
             @Override
             public void mouseReleased(MouseEvent e) {
                 animator.setSecondPointOfLine(e.getX(), e.getY());
+                animator.drawAll();
+                animator.drawToScreen();
 
             }
 
